@@ -1,10 +1,331 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <title>Welcome</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background-color: #f4f6f8;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 32px;
+      background-color: #2e3a59;
+      color: white;
+    }
+
+    .header .logo {
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .header .profile {
+      background: #fff;
+      color: #2e3a59;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .container {
+      display: flex;
+      height: calc(100vh - 70px);
+    }
+
+    .menu-title {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #e5e7eb;
+      justify-content: center;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .sidebar {
+      width: 220px;
+      background-color: #1f2937;
+      padding: 10px;
+      color: white;
+    }
+
+    .sidebar button {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 12px;
+      background-color: #374151;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background 0.3s;
+    }
+
+    .sidebar button:hover {
+      background-color: #4b5563;
+    }
+
+    .main-content {
+  flex: 1;
+  padding: 80px 20px 20px 20px; /* Top padding added */
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Changed from center */
+  align-items: center;
+}
+
+
+    .add-issue-btn {
+      background-color: #2563eb;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+
+    .add-issue-btn:hover {
+      background-color: #1d4ed8;
+    }
+
+    .issue-form {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .issue-form input,
+    .issue-form textarea,
+    .issue-form select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    .issue-form label {
+      font-weight: 600;
+    }
+
+    .issue-form button {
+      background-color: #16a34a;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Welcome to the Database Page!</h1>
+
+  <div class="header">
+    <div class="logo">CivicTrack Team</div>
+    <div class="profile">User Profile</div>
+  </div>
+
+  <div class="container">
+    <div class="sidebar">
+      <h2 class="menu-title">Menu</h2>
+      <button id="issuesBtn">Issues</button>
+      <button id="activitiesBtn">My Activities</button>
+    </div>
+
+    <div class="main-content" id="mainContent">
+      <!-- Content will be injected here -->
+    </div>
+  </div>
+
+  <script>
+    const issuesBtn = document.getElementById("issuesBtn");
+    const mainContent = document.getElementById("mainContent");
+
+    issuesBtn.addEventListener("click", () => {
+      mainContent.innerHTML = `
+    <button class="add-issue-btn" id="showFormBtn">+ Add Issue</button>
+    <form class="issue-form" id="issueForm">
+      <label for="photo">Photo</label>
+      <input type="file" id="photo" name="photo" accept="image/*" required />
+
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="category">Category</label>
+      <select id="category" name="category" required>
+        <option value="">Select</option>
+        <option value="Garbage">Garbage</option>
+        <option value="Water Leak">Water Leak</option>
+        <option value="Road Damage">Road Damage</option>
+        <option value="Street Light">Street Light</option>
+      </select>
+
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" required />
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="4" required></textarea>
+
+      <button type="submit">Submit Issue</button>
+    </form>
+  `;
+
+      const showFormBtn = document.getElementById("showFormBtn");
+      const issueForm = document.getElementById("issueForm");
+
+      showFormBtn.addEventListener("click", () => {
+        const a = issueForm.style.display;
+        if (a == "none" || a == "") {
+          issueForm.style.display = "flex";
+          showFormBtn.textContent = "Hide Form";
+        } else {
+          issueForm.style.display = "none";
+          showFormBtn.textContent = "+ Add Issue";
+        }
+      });
+
+      issueForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const photoInput = document.getElementById('photo');
+        const name = document.getElementById('name').value;
+        const category = document.getElementById('category').value;
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value;
+
+        const file = photoInput.files[0];
+
+        const reader = new FileReader();
+        reader.onloadend = async () => {
+          const base64Photo = reader.result;
+
+          const payload = {
+            photo: base64Photo,
+            name,
+            category,
+            title,
+            description
+          };
+
+          try {
+            const res = await fetch('http://localhost:5000/api/issue/add', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(payload)
+            });
+
+            const data = await res.json();
+            alert(data.message || 'Submitted!');
+            issueForm.reset();
+          } catch (err) {
+            console.error(err);
+            alert('Submission failed!');
+          }
+        };
+
+        if (file) {
+          reader.readAsDataURL(file);
+        } else {
+          alert('Please upload a photo.');
+        }
+      });
+    });
+    activitiesBtn.addEventListener("click", () => {
+      mainContent.innerHTML = `
+    <h2>My Activities</h2>
+    <label for="activityName">Enter your name:</label>
+    <input type="text" id="activityName" placeholder="Your name" style="padding: 8px; margin: 10px 0; border-radius: 6px; border: 1px solid #ccc;">
+    <button id="fetchActivitiesBtn" style="padding: 10px 16px; background-color: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer;">Fetch My Issues</button>
+    <div id="activitiesList" style="margin-top: 20px;"></div>
+  `;
+
+      const fetchActivitiesBtn = document.getElementById("fetchActivitiesBtn");
+      fetchActivitiesBtn.addEventListener("click", async () => {
+        const name = document.getElementById("activityName").value.trim();
+        const activitiesList = document.getElementById("activitiesList");
+
+        if (!name) {
+          alert("Please enter your name");
+          return;
+        }
+
+        try {
+          const res = await fetch(`http://localhost:5000/api/issue/user/${encodeURIComponent(name)}`);
+          const issues = await res.json();
+
+          if (!Array.isArray(issues) || issues.length === 0) {
+            activitiesList.innerHTML = `<p>No activities found for <strong>${name}</strong>.</p>`;
+            return;
+          }
+
+          activitiesList.innerHTML = issues.map(issue => `
+  <div style="display: flex; background: #fff; padding: 16px; margin-bottom: 15px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); gap: 20px; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 250px;">
+      <h3 style="margin-bottom: 6px;">${issue.title}</h3>
+      <p style="color: gray;"><strong>Status:</strong> Not Yet Started</p>
+      <p><strong>Category:</strong> ${issue.category}</p>
+      <p><strong>Submitted by:</strong> ${issue.name}</p>
+      <p><strong>Date:</strong> ${new Date(issue.createdAt).toLocaleDateString()}</p>
+      <p><strong>Description:</strong></p>
+      <div style="white-space: pre-wrap; word-break: break-word; background: #f3f4f6; padding: 8px; border-radius: 6px; margin-top: 5px;">
+        ${issue.description}
+      </div>
+    </div>
+
+    ${issue.photo ? `
+      <div style="flex-shrink: 0; max-width: 250px; width: 100%;">
+        <img src="${issue.photo}" alt="Issue Image" style="width: 100%; height: auto; border-radius: 8px;" />
+      </div>
+    ` : ''}
+  </div>
+`).join("");
+
+        } catch (err) {
+          console.error(err);
+          activitiesList.innerHTML = `<p>Error fetching activities.</p>`;
+        }
+      });
+    });
+  </script>
+
 </body>
+
 </html>

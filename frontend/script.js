@@ -19,8 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const data = await res.json();
         if (res.ok) {
-          alert('Signup successful!');
-          window.location.href = 'index.html';
+          window.location.href = 'database.html';
         } else {
           alert(data.message || 'Signup failed');
         }
@@ -47,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const data = await res.json();
         if (res.ok) {
-          alert('Signin successful!');
           window.location.href = 'database.html';
         } else {
           alert(data.message || 'Signin failed');
