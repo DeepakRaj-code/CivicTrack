@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Civic Track</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            text-align: left;
+            background-color: #f4f7f9;
+        }
+        header {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+        }
+        header h1 {
+            text-align: center;
+            margin: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 2rem;
+        }
+        section {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        thead th {
+            background-color: #ecf0f1;
+        }
+        .btn-ban {
+            background-color: #c0392b;
+            color: white;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Admin Dashboard</h1>
+    </header>
+
+    <div class="container">
+        <section id="analytics-section">
+            <h2>Analytics</h2>
+            <div id="analytics-data">
+                <p>Loading analytics...</p>
+            </div>
+        </section>
+
+        <section id="user-management-section">
+            <h2>User Management</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="user-table-body">
+                    </tbody>
+            </table>
+        </section>
+        
+         </div>
+
+    <script src="admin.js"></script>
+
+</body>
+</html>
